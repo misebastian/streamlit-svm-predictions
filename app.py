@@ -1,10 +1,9 @@
+import joblib
 import streamlit as st
-import pickle
 import pandas as pd
 
-# Cargar el modelo guardado
-with open('best_logistic_model.pkl', 'rb') as file:
-    model = pickle.load(file)
+# Cargar el modelo guardado con joblib
+model = joblib.load('best_logistic_model.pkl')
 
 # Título de la aplicación
 st.title("Predicción con Regresión Logística")
@@ -24,7 +23,7 @@ Hour = st.number_input('Hour')
 if st.button('Realizar Predicción'):
     # Crear un DataFrame con los valores introducidos
     input_data = pd.DataFrame([[Temp_C, Dew_Point_Temp_C, Rel_Hum, Wind_Speed_km_h, Visibility_km, Press_kPa, Month, Day, Hour]],
-                              columns=['Temp_C', 'Dew Point Temp_C', 'Rel Hum %', 'Wind Speed_km/h', 'Visibility_km', 'Press_kPa', 'Month', 'Day', 'Hour'])
+                              columns=['Temp_C', 'Dew Point Temp_C', 'Rel Hum %', 'Wind Speed_km/h', 'Visibility_km', 'Press kPa', 'Month', 'Day', 'Hour'])
     
     # Realizar la predicción
     prediction = model.predict(input_data)
