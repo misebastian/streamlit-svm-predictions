@@ -1,7 +1,6 @@
 import joblib
 import streamlit as st
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 
 # Datos predefinidos de media y desviación estándar
 data = {
