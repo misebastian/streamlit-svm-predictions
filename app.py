@@ -1,6 +1,7 @@
 import joblib
 import streamlit as st
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 # Cargar el modelo guardado con joblib
 model = joblib.load('best_logistic_model.pkl')
@@ -31,6 +32,11 @@ if st.button('Realizar Predicción'):
     input_data = pd.DataFrame([[Temp_C, Dew_Point_Temp_C, Rel_Hum, Wind_Speed_km_h, Visibility_km, Press_kPa, Month, Day, Hour]],
                               columns=['Temp_C', 'Dew Point Temp_C', 'Rel Hum_%', 'Wind Speed_km/h', 'Visibility_km', 'Press_kPa', 'Month', 'Day', 'Hour'])
 
+    # Estandarizar las columnas numéricas
+    scaler = StandardScaler()
+    columns_to_scale = ["Temp_C", "Dew Point Temp_C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]
+    input_data[columns_to_scale] = scaler.fit_transform(input_data[columns_to_scale])
+
     # Realizar la predicción
     prediction = model.predict(input_data)
 
@@ -39,4 +45,3 @@ if st.button('Realizar Predicción'):
         st.markdown("<h2 style='text-align: center; color: red;'>La predicción es: Sí llueve ☔</h2>", unsafe_allow_html=True)
     else:
         st.markdown("<h2 style='text-align: center; color: blue;'>La predicción es: No llueve 🌞</h2>", unsafe_allow_html=True)
-
