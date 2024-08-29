@@ -16,11 +16,13 @@ df = pd.DataFrame(data, index=['mean', 'std'])
 # Cargar el modelo guardado con joblib
 model = joblib.load('naive_bayes_model.pkl')
 
-# Título de la aplicación con la descripción adicional
+# Título de la aplicación con la descripción adicional y los nombres
 st.markdown("""
 <h1 style='text-align: center; color: #4CAF50;'>Predicción de Lluvia con Naive Bayes</h1>
 <p style='text-align: center;'>Maestría en Estadística Aplicada. Machine Learning.</p>
+<p style='text-align: center;'>Miguel Herrera, Carlos López, Javier de Moya</p>
 """, unsafe_allow_html=True)
+
 
 st.write("Por favor, introduce los valores a continuación:")
 
