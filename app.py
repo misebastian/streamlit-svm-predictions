@@ -1,8 +1,6 @@
 import joblib
 import streamlit as st
 import pandas as pd
-import time  # Para simular el tiempo de carga
-import streamlit.components.v1 as components
 
 # Datos predefinidos de media y desviación estándar
 data = {
@@ -48,54 +46,121 @@ with col2:
 
 # Crear un botón para realizar la predicción
 if st.button('Realizar Predicción'):
-    # Insertar animación de cargando
-    loading_html = """
-    <div style="text-align: center;">
-        <div class="loader"></div>
-        <p style="color: #0D47A1;">Cargando... Por favor espera.</p>
-    </div>
+    # Definir los inputs en un DataFrame
+    input_data = pd.DataFrame([[Temp_C, Dew_Point_Temp_C, Rel_Hum, Wind_Speed_km_h, Visibility_km, Press_kPa, Month, Day, Hour]],
+                              columns=['Temp_C', 'Dew Point Temp_C', 'Rel Hum_%', 'Wind Speed_km/h', 'Visibility_km', 'Press_kPa', 'Month', 'Day', 'Hour'])
 
-    <style>
-    .loader {
-        border: 16px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 16px solid #0D47A1;
-        border-bottom: 16px solid #0D47A1;
-        width: 120px;
-        height: 120px;
-        animation: spin 2s linear infinite;
-        margin: auto;
-    }
+    # Reemplazar valores faltantes con las medias predefinidas
+    for column in ['Temp_C', 'Dew Point Temp_C', 'Rel Hum_%', 'Wind Speed_km/h', 'Visibility_km', 'Press_kPa']:
+        if pd.isna(input_data[column][0]):
+            input_data[column] = df.at['mean', column]
 
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    </style>
-    """
-    
-    # Mostrar la animación de carga mientras se realiza la predicción
-    with st.empty():
-        components.html(loading_html, height=200)
-        time.sleep(2)  # Simular tiempo de carga
-        
-        # Definir los inputs en un DataFrame
-        input_data = pd.DataFrame([[Temp_C, Dew_Point_Temp_C, Rel_Hum, Wind_Speed_km_h, Visibility_km, Press_kPa, Month, Day, Hour]],
-                                  columns=['Temp_C', 'Dew Point Temp_C', 'Rel Hum_%', 'Wind Speed_km/h', 'Visibility_km', 'Press_kPa', 'Month', 'Day', 'Hour'])
+    # Estandarizar las columnas numéricas
+    input_data[["Temp_C", "Dew Point Temp_C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]] = (input_data[["Temp_C", "Dew Point Temp_C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]] - df.loc['mean']) / df.loc['std']
 
-        # Reemplazar valores faltantes con las medias predefinidas
-        for column in ['Temp_C', 'Dew Point Temp_C', 'Rel Hum_%', 'Wind Speed_km/h', 'Visibility_km', 'Press_kPa']:
-            if pd.isna(input_data[column][0]):
-                input_data[column] = df.at['mean', column]
+    # Realizar la predicción
+    prediction = model.predict(input_data)
 
-        # Estandarizar las columnas numéricas
-        input_data[["Temp_C", "Dew Point Temp_C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]] = (input_data[["Temp_C", "Dew Point Temp_C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]] - df.loc['mean']) / df.loc['std']
-
-        # Realizar la predicción
-        prediction = model.predict(input_data)
-
-    # Mostrar el resultado con un diseño más llamativo
+    # Mostrar el resultado con animaciones
     if prediction[0] == 1:
-        st.markdown("<h2 style='text-align: center; color: #F44336;'>La predicción es: Sí llueve ☔</h2>", unsafe_allow_html=True)
+        st.markdown("""
+        <div style='text-align: center;'>
+            <h2 style='color: #F44336;'>La predicción es: Sí llueve ☔</h2>
+            <div class="cloud">
+                <div class="rain"></div>
+                <div class="rain"></div>
+                <div class="rain"></div>
+            </div>
+        </div>
+
+        <style>
+        .cloud {
+            position: relative;
+            background: #444;
+            width: 200px;
+            height: 60px;
+            margin: 20px auto;
+            border-radius: 100px;
+        }
+
+        .cloud:before, .cloud:after {
+            content: '';
+            position: absolute;
+            background: #444;
+            width: 100px;
+            height: 80px;
+            position: absolute;
+            top: -40px;
+            border-radius: 100px;
+        }
+
+        .cloud:before {
+            left: 10px;
+        }
+
+        .cloud:after {
+            right: 10px;
+        }
+
+        .rain {
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            background: #0D47A1;
+            bottom: -20px;
+            left: 50%;
+            margin-left: -1px;
+            animation: rain 0.5s infinite linear;
+        }
+
+        .rain:nth-child(2) {
+            left: 60%;
+            animation-delay: 0.3s;
+        }
+
+        .rain:nth-child(3) {
+            left: 40%;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes rain {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
+        </style>
+        """, unsafe_allow_html=True)
     else:
-        st.markdown("<h2 style='text-align: center; color: #2196F3;'>La predicción es: No llueve 🌞</h2>", unsafe_allow_html=True)
+        st.markdown("""
+        <div style='text-align: center;'>
+            <h2 style='color: #2196F3;'>La predicción es: No llueve 🌞</h2>
+            <div class="sun"></div>
+        </div>
+
+        <style>
+        .sun {
+            position: relative;
+            background: #FFEB3B;
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            border-radius: 50%;
+            box-shadow: 0 0 50px #FFEB3B;
+        }
+
+        .sun:before, .sun:after {
+            content: '';
+            position: absolute;
+            background: #FFEB3B;
+            width: 80px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .sun:after {
+            width: 20px;
+            height: 80px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
