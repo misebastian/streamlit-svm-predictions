@@ -24,17 +24,17 @@ st.write("Por favor, introduce los valores a continuación:")
 col1, col2 = st.columns(2)
 
 with col1:
-    Temp_C = st.number_input('Temp_C', value=None, format="%.2f")
-    Dew_Point_Temp_C = st.number_input('Dew Point Temp_C', value=None, format="%.2f")
-    Rel_Hum = st.number_input('Rel Hum_%', value=None)
-    Wind_Speed_km_h = st.number_input('Wind Speed_km/h', value=None)
-    Visibility_km = st.number_input('Visibility_km', value=None, format="%.2f")
+    Temp_C = st.number_input('Temp_C', format="%.2f")
+    Dew_Point_Temp_C = st.number_input('Dew Point Temp_C', format="%.2f")
+    Rel_Hum = st.number_input('Rel Hum_%')
+    Wind_Speed_km_h = st.number_input('Wind Speed_km/h')
+    Visibility_km = st.number_input('Visibility_km', format="%.2f")
 
 with col2:
-    Press_kPa = st.number_input('Press_kPa', value=None, format="%.2f")
-    Month = st.number_input('Month', value=None, min_value=1, max_value=12)
-    Day = st.number_input('Day', value=None, min_value=1, max_value=31)
-    Hour = st.number_input('Hour', value=None, min_value=0, max_value=23)
+    Press_kPa = st.number_input('Press_kPa', format="%.2f")
+    Month = st.number_input('Month', value=1, min_value=1, max_value=12)
+    Day = st.number_input('Day', value=1, min_value=1, max_value=31)
+    Hour = st.number_input('Hour', value=0, min_value=0, max_value=23)
 
 # Crear un botón para realizar la predicción
 if st.button('Realizar Predicción'):
