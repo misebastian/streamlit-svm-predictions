@@ -22,9 +22,6 @@ st.markdown("""
 <p style='text-align: center;'>Maestría en Estadística Aplicada. Machine Learning.</p>
 """, unsafe_allow_html=True)
 
-# Incluir una imagen en la esquina superior derecha
-st.image("logo-uninorte.png", width=100, use_column_width=False)
-
 st.write("Por favor, introduce los valores a continuación:")
 
 # Crear columnas para una mejor disposición visual
@@ -55,7 +52,7 @@ if st.button('Realizar Predicción'):
             input_data[column] = df.at['mean', column]
     
     # Estandarizar las columnas numéricas en una sola línea
-    input_data[["Temp_C", "Dew Point Temp_C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]] = (input_data[["Temp_C", "Dew Point Temp C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]] - df.loc['mean']) / df.loc['std']
+    input_data[["Temp_C", "Dew Point Temp_C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]] = (input_data[["Temp_C", "Dew Point Temp_C", "Rel Hum_%", "Wind Speed_km/h", "Visibility_km", "Press_kPa"]] - df.loc['mean']) / df.loc['std']
 
     # Realizar la predicción
     prediction = model.predict(input_data)
