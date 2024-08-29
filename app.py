@@ -19,8 +19,9 @@ model = joblib.load('naive_bayes_model.pkl')
 # Título de la aplicación con la descripción adicional y los nombres
 st.markdown("""
 <h1 style='text-align: center; color: #4CAF50;'>Predicción de Lluvia con Naive Bayes</h1>
-<p style='text-align: center;'>Maestría en Estadística Aplicada. Machine Learning.</p>
+<p style='text-align: center;'>Universidad del Norte. Maestría en Estadística Aplicada. Machine Learning.</p>
 <p style='text-align: center;'>Miguel Herrera, Carlos López, Javier de Moya</p>
+<p style='text-align: center;'>30 de Agosto de 2024, Barranquilla. </p>
 """, unsafe_allow_html=True)
 
 
