@@ -32,9 +32,9 @@ with col1:
 
 with col2:
     Press_kPa = st.number_input('Press_kPa', value=None, format="%.2f")
-    Month = st.number_input('Month', value=1, min_value=1, max_value=12)
-    Day = st.number_input('Day', value=1, min_value=1, max_value=31)
-    Hour = st.number_input('Hour', value=0, min_value=0, max_value=23)
+    Month = st.number_input('Month', value=None, min_value=1, max_value=12)
+    Day = st.number_input('Day', value=None, min_value=1, max_value=31)
+    Hour = st.number_input('Hour', value=None, min_value=0, max_value=23)
 
 # Crear un botón para realizar la predicción
 if st.button('Realizar Predicción'):
