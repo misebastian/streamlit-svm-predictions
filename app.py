@@ -21,7 +21,7 @@ st.markdown("""
     <div style="background-color:#0D47A1;padding:10px;border-radius:10px">
         <h1 style='text-align: center; color: #FFFFFF;'>Predicción de Lluvia con Naive Bayes</h1>
         <p style='text-align: center; color: #BBDEFB;'>Universidad del Norte. Maestría en Estadística Aplicada. Machine Learning.</p>
-        <p style='text-align: center; color: #BBDEFB;'>Miguel Herrera, Carlos López, Javier de Moya</p>
+        <p style='text-align: center; color: #BBDEFB;'>Miguel Herrera, Carlos López, Javier de Moya.</p>
         <p style='text-align: center; color: #BBDEFB;'>30 de Agosto de 2024, Barranquilla.</p>
     </div>
 """, unsafe_allow_html=True)
@@ -76,40 +76,42 @@ if st.button('Realizar Predicción'):
         <style>
         .cloud {
             position: relative;
-            background: #444;
-            width: 200px;
-            height: 60px;
-            margin: 20px auto;
-            border-radius: 100px;
+            background: linear-gradient(to bottom, #ECE9E6, #ffffff);
+            width: 120px;
+            height: 80px;
+            margin: 50px auto;
+            border-radius: 50px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
         }
 
         .cloud:before, .cloud:after {
             content: '';
             position: absolute;
-            background: #444;
+            background: linear-gradient(to bottom, #ECE9E6, #ffffff);
             width: 100px;
-            height: 80px;
-            position: absolute;
-            top: -40px;
-            border-radius: 100px;
-        }
-
-        .cloud:before {
+            height: 100px;
+            border-radius: 50px;
+            top: -50px;
             left: 10px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
         }
 
         .cloud:after {
-            right: 10px;
+            width: 140px;
+            height: 140px;
+            top: -60px;
+            left: -70px;
         }
 
         .rain {
             position: absolute;
-            width: 2px;
-            height: 10px;
-            background: #0D47A1;
+            width: 5px;
+            height: 15px;
+            background: linear-gradient(to bottom, #00c6ff, #0072ff);
             bottom: -20px;
             left: 50%;
-            margin-left: -1px;
+            margin-left: -2.5px;
+            border-radius: 50%;
             animation: rain 0.5s infinite linear;
         }
 
@@ -125,7 +127,7 @@ if st.button('Realizar Predicción'):
 
         @keyframes rain {
             0% { transform: translateY(0); }
-            100% { transform: translateY(20px); }
+            100% { transform: translateY(40px); opacity: 0; }
         }
         </style>
         """, unsafe_allow_html=True)
@@ -133,7 +135,18 @@ if st.button('Realizar Predicción'):
         st.markdown("""
         <div style='text-align: center;'>
             <h2 style='color: #2196F3;'>La predicción es: No llueve 🌞</h2>
-            <div class="sun"></div>
+            <div class="sun">
+                <div class="ray_box">
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                </div>
+            </div>
         </div>
 
         <style>
@@ -142,25 +155,58 @@ if st.button('Realizar Predicción'):
             background: #FFEB3B;
             width: 100px;
             height: 100px;
-            margin: 20px auto;
+            margin: 50px auto;
             border-radius: 50%;
-            box-shadow: 0 0 50px #FFEB3B;
+            box-shadow: 0 0 50px rgba(255, 235, 59, 0.5);
         }
 
-        .sun:before, .sun:after {
-            content: '';
+        .ray_box {
             position: absolute;
-            background: #FFEB3B;
-            width: 80px;
-            height: 20px;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(45deg);
+            width: 120px;
+            height: 120px;
+            margin-top: -60px;
+            margin-left: -60px;
+            animation: spin 3s linear infinite;
         }
 
-        .sun:after {
-            width: 20px;
-            height: 80px;
+        .ray {
+            position: absolute;
+            background: #FFEB3B;
+            width: 10px;
+            height: 40px;
+            top: 0;
+            left: 50%;
+            margin-left: -5px;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(255, 235, 59, 0.5);
+        }
+
+        .ray:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        .ray:nth-child(3) {
+            transform: rotate(90deg);
+        }
+        .ray:nth-child(4) {
+            transform: rotate(135deg);
+        }
+        .ray:nth-child(5) {
+            transform: rotate(180deg);
+        }
+        .ray:nth-child(6) {
+            transform: rotate(225deg);
+        }
+        .ray:nth-child(7) {
+            transform: rotate(270deg);
+        }
+        .ray:nth-child(8) {
+            transform: rotate(315deg);
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
         }
         </style>
         """, unsafe_allow_html=True)
